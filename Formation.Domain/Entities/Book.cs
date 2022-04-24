@@ -4,6 +4,6 @@
     {
         public string Title { get; set; }
         public string? Description { get; set; }
-        public Autor Autor { get; set; }
+        public Author Autor { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Formation.Domain.Entities
 {
-    public class Autor : BaseEntity
+    public class Author : BaseEntity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

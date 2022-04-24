@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Authors\Commands\UpdateAuthor\" />
+    <Folder Include="Authors\Queries\GetAllAuthors\" />
+    <Folder Include="Authors\Queries\GetOneAuthor\" />
+    <Folder Include="Books\Queries\" />
     <Folder Include="Entities\" />
   </ItemGroup>
 

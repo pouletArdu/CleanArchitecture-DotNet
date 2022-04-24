@@ -1,6 +1,6 @@
 ﻿namespace Application.Validation.Tests.Drivers
 {
-    public class BookRepositoryMock : BookRepository
+    public class BookRepositoryMock : BookRepository,IDisposable
     {
         List<Book> books;
 
@@ -18,6 +18,11 @@
         public Task Delete(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            books.Clear();
         }
 
         public async Task<IEnumerable<Book>> GetAll()
