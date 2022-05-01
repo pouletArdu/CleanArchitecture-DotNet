@@ -1,0 +1,14 @@
+﻿global using System.Linq;
+global using System.Text;
+global using System.Threading.Tasks;
+global using Microsoft.EntityFrameworkCore;
+global using Formation.Domain.Entities;
+global using Formation.Domain.Enums;
+global using AutoMapper;
+global using Formation.Infrastructure.Entities;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Formation.Application.Repositories;
+global using Formation.Infrastructure.Persistence;
+global using Formation.Infrastructure.Entities.Common;

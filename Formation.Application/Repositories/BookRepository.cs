@@ -1,7 +1,7 @@
 ﻿namespace Formation.Application.Repositories
 {
-    public interface BookRepository : GenericRepository<Book>
+    public interface BookRepository : GenericRepository<BookDTO>
     {
-        Task<Book> GetByTitle(string title);
+        Task<BookDTO> GetByTitle(string title);
     }
 }

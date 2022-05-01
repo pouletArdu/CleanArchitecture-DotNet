@@ -10,7 +10,10 @@
     <Folder Include="Authors\Commands\UpdateAuthor\" />
     <Folder Include="Authors\Queries\GetAllAuthors\" />
     <Folder Include="Authors\Queries\GetOneAuthor\" />
-    <Folder Include="Books\Queries\" />
+    <Folder Include="Books\Commands\DeleteBook\" />
+    <Folder Include="Books\Commands\UpdateBook\" />
+    <Folder Include="Books\Queries\GetAll\" />
+    <Folder Include="Books\Queries\GetOne\" />
     <Folder Include="Entities\" />
   </ItemGroup>
 

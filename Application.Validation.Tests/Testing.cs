@@ -14,6 +14,7 @@ public class Testing
         var services = new ServiceCollection();
         services.AddApplication();
         services.AddSingleton<BookRepository, BookRepositoryMock>();
+        services.AddSingleton<AuthorRepository, AuthorRepositoryMock>();
         _scopeFactory = services.BuildServiceProvider().GetRequiredService<IServiceScopeFactory>();
     }
     public static async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)

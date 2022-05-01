@@ -1,19 +1,34 @@
 ﻿namespace Formation.Application.Authors.Commands.CreateAuthor
 {
-    public class CreateAuthorCommand : IRequest<Author>
+    public class CreateAuthorCommand : IRequest<AuthorDTO>
     {
-        public Author Author { get; set; }
-        public CreateAuthorCommand(Author author)
+        public CreateAuthorCommand(string firstName, string lastName, DateTime birthDay, Gender gender)
         {
-            Author = author;
+            FirstName = firstName;
+            LastName = lastName;
+            BirthDay = birthDay;
+            Gender = gender;
         }
-    }
 
-    public class CreateAuthorCommandHandler : IRequestHandler<CreateAuthorCommand, Author>
+        public string FirstName { get; init; }
+        public string LastName { get; init; }
+        public DateTime BirthDay { get; init; }
+        public Gender Gender { get; init; }
+            }
+
+    public class CreateAuthorCommandHandler : IRequestHandler<CreateAuthorCommand, AuthorDTO>
     {
-        public Task<Author> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
+        private AuthorRepository _authorRepository;
+
+        public CreateAuthorCommandHandler(AuthorRepository authorRepository)
         {
-            throw new NotImplementedException();
+            _authorRepository = authorRepository;
+        }
+
+        public Task<AuthorDTO> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
+        {
+            return _authorRepository.Create(new AuthorDTO {
+            BirthDay = request.BirthDay});
         }
     }
 }

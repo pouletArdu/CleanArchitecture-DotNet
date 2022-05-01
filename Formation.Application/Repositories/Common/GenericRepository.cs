@@ -9,9 +9,9 @@ namespace Formation.Application.Repositories.Common
     public interface GenericRepository<T> where T : BaseEntity
     {
         Task<IEnumerable<T>> GetAll();
-        Task<T> Create(T book);
+        Task<T> Create(T item);
         Task<T> GetById(int id);
-        Task<T> Update(T book);
+        Task<T> Update(T item);
         Task Delete(int id);
     }
 }

@@ -1,10 +1,11 @@
 ﻿namespace Formation.Domain.Entities
 {
-    public class Author : BaseEntity
+    public class AuthorDTO : BaseEntity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateOnly BirthDay { get; set; }
+        public DateTime BirthDay { get; set; }
         public Gender gender { get; set; }
+        public ICollection<BookDTO> Books { get; set; } 
     }
 }

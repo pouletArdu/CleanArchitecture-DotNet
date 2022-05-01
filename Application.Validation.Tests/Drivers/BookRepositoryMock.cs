@@ -2,14 +2,14 @@
 {
     public class BookRepositoryMock : BookRepository,IDisposable
     {
-        List<Book> books;
+        List<BookDTO> books;
 
         public BookRepositoryMock()
         {
-            books = new List<Book>();
+            books = new List<BookDTO>();
         }
 
-        public async Task<Book> Create(Book book)
+        public async Task<BookDTO> Create(BookDTO book)
         {
             books.Add(book);
             return book;
@@ -25,22 +25,22 @@
             books.Clear();
         }
 
-        public async Task<IEnumerable<Book>> GetAll()
+        public async Task<IEnumerable<BookDTO>> GetAll()
         {
             return books;
         }
 
-        public Task<Book> GetById(int id)
+        public Task<BookDTO> GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Book> GetByTitle(string title)
+        public async Task<BookDTO> GetByTitle(string title)
         {
             return books.FirstOrDefault(x => x.Title == title);
         }
 
-        public Task<Book> Update(Book book)
+        public Task<BookDTO> Update(BookDTO book)
         {
             throw new NotImplementedException();
         }

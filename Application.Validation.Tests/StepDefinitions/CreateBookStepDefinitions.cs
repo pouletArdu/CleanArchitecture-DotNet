@@ -1,12 +1,12 @@
-namespace Application.Validation.Tests.StepDefinitions;
-
-using static Testing;
+using static Application.Validation.Tests.Testing;
 using ValidationException = Formation.Application.Common.Exceptions.ValidationException;
+
+namespace Application.Validation.Tests.StepDefinitions;
 
 [Binding]
 public class CreateBookStepDefinitions
 {
-    private Book _book;
+    private BookDTO _book = null!;
     private CreateBookCommand _command = null!;
 
 
@@ -20,10 +20,10 @@ public class CreateBookStepDefinitions
     [Given(@"I have a new book to add")]
     public void GivenIHaveANewBookToAdd()
     {
-        _book = new Book
+        _book = new BookDTO
         {
             Title = "Titre",
-            Autor = new Author
+            Autor = new AuthorDTO
             {
                 FirstName = "André"
             }
@@ -33,7 +33,7 @@ public class CreateBookStepDefinitions
     [When(@"I add the book")]
     public async void WhenIAddTheBook()
     {
-        _command = new CreateBookCommand(_book);
+        _command = new CreateBookCommand(_book.Title,_book.Description,_book.Autor.Id);
         await SendAsync(_command);
     }
 
@@ -49,9 +49,9 @@ public class CreateBookStepDefinitions
     [Given(@"I have a new book without title to add")]
     public void GivenIHaveANewBookWithoutTitleToAdd()
     {
-        _book = new Book
+        _book = new BookDTO
         {
-            Autor = new Author
+            Autor = new AuthorDTO
             {
                 FirstName = "André"
             },
@@ -65,25 +65,26 @@ public class CreateBookStepDefinitions
         var repository = (BookRepositoryMock)GetService<BookRepository>();
         foreach (var row in table.Rows)
         {
-            await repository.Create(new Book
+            var (title, authorFirstName,_) = row.Values;
+            await repository.Create(new BookDTO
             {
-                Title = row[0],
-                Autor = new Author
+                Title = title,
+                Autor = new AuthorDTO
                 {
-                    FirstName = row[1]
+                    FirstName = authorFirstName
                 },
                 CreationDate = DateTime.Now
-            });
+            }) ;
         }
     }
 
     [Given(@"I have a new book '([^']*)' to add")]
     public void GivenIHaveANewBookToAdd(string title)
     {
-        _book = new Book
+        _book = new BookDTO
         {
             Title = title,
-            Autor = new Author
+            Autor = new AuthorDTO
             {
                 FirstName = "Nathanaël"
             },
@@ -94,7 +95,7 @@ public class CreateBookStepDefinitions
     [When(@"I add the book to the validator")]
     public void WhenIAddTheBookToTheValidator()
     {
-        _command = new CreateBookCommand(_book);
+        _command = new CreateBookCommand(_book.Title, _book.Description, _book.Autor.Id);
     }
 
     [Then(@"An ValidationException is raised by the validator")]

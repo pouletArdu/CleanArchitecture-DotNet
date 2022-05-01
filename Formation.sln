@@ -11,11 +11,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8F5510A9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Formation.Domain", "Formation.Domain\Formation.Domain.csproj", "{8FDD6698-1567-447F-9B32-6258BF42AFFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formation.Application", "Formation.Application\Formation.Application.csproj", "{80FF6985-93EA-44DB-B217-FC2C2B0773F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Formation.Application", "Formation.Application\Formation.Application.csproj", "{80FF6985-93EA-44DB-B217-FC2C2B0773F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formation.Infrastructure", "Formation.Infrastructure\Formation.Infrastructure.csproj", "{727E1A81-8A33-4C5E-A495-DCA883879199}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Formation.Infrastructure", "Formation.Infrastructure\Formation.Infrastructure.csproj", "{727E1A81-8A33-4C5E-A495-DCA883879199}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Validation.Tests", "Application.Validation.Tests\Application.Validation.Tests.csproj", "{9E745891-AC85-498B-99A1-FBD34C5ED4D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Validation.Tests", "Application.Validation.Tests\Application.Validation.Tests.csproj", "{9E745891-AC85-498B-99A1-FBD34C5ED4D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6D1A6BA2-FE99-46AF-B190-95A7D970C93E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

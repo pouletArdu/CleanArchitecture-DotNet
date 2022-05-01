@@ -1,34 +1,41 @@
-﻿namespace Formation.Application.Books.Commands.CreateBook
+﻿namespace Formation.Application.Books.Commands.CreateBook;
+
+public class CreateBookCommand : IRequest<BookDTO>
 {
-    public class CreateBookCommand : IRequest<Book>
+    public string Title { get; init; }
+    public string? Description { get; init; }
+    public int AuthorId { get; init; }
+
+    public CreateBookCommand(string title, string? description, int authorId)
     {
-        public CreateBookCommand(Book book)
-        {
-            Book = book;
-        }
+        Title = title;
+        Description = description;
+        AuthorId = authorId;
+    }
+}
 
-        public Book Book { get; }
+public class CreateBookCommandHander : IRequestHandler<CreateBookCommand, BookDTO>
+{
+    private readonly BookRepository _bookRepository;
+    private readonly AuthorRepository _authorRepository;
 
-
+    public CreateBookCommandHander(BookRepository bookRepository, AuthorRepository authorRepository)
+    {
+        _bookRepository = bookRepository;
+        _authorRepository = authorRepository;
     }
 
-    public class CreateBookCommandHander : IRequestHandler<CreateBookCommand, Book>
+    public async Task<BookDTO> Handle(CreateBookCommand request, CancellationToken cancellationToken)
     {
-        private readonly BookRepository _bookRepository;
+        var author = await _authorRepository.GetById(request.AuthorId);
 
-        public CreateBookCommandHander(BookRepository bookRepository)
+        var book = await _bookRepository.Create(new BookDTO
         {
-            _bookRepository = bookRepository;
-        }
+            Title = request.Title,
+            Description = request.Description,
+            Autor = author
+        });
 
-        public Task<Book> Handle(CreateBookCommand request, CancellationToken cancellationToken)
-        {
-            //var validator = new CreateBookCommandValidator(_bookRepository);
-            //var validation = validator.Validate(request);
-            //if (!validation.IsValid) throw new ArgumentException(validation.Errors.First()!.ErrorMessage);
-
-            var book = _bookRepository.Create(request.Book);
-            return book;
-        }
+        return book;
     }
 }
