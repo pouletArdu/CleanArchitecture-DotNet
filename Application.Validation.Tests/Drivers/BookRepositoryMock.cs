@@ -1,4 +1,6 @@
-﻿namespace Application.Validation.Tests.Drivers
+﻿using Formation.Application.Common.Model;
+
+namespace Application.Validation.Tests.Drivers
 {
     public class BookRepositoryMock : BookRepository,IDisposable
     {
@@ -28,6 +30,11 @@
         public async Task<IEnumerable<BookDTO>> GetAll()
         {
             return books;
+        }
+
+        public Task<PaginatedList<BookDTO>> GetAll(int pageNumber, int pageSize)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<BookDTO> GetById(int id)

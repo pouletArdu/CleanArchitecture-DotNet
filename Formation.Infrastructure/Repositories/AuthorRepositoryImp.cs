@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Formation.Application.Common.Model;
 
 namespace Formation.Infrastructure.Repositories
 {
@@ -19,6 +20,7 @@ namespace Formation.Infrastructure.Repositories
         {
             var entity = _mapper.Map<Author>(item);
             await _context.Authors.AddAsync(entity);
+            await _context.SaveChangesAsync();
             return item;
         }
 
@@ -30,6 +32,13 @@ namespace Formation.Infrastructure.Repositories
         public Task<IEnumerable<AuthorDTO>> GetAll()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<PaginatedList<AuthorDTO>> GetAll(int pageNumber, int pageSize)
+        {
+            var result = await _context.Authors.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            var count = await _context.Authors.CountAsync();
+            return new PaginatedList<AuthorDTO>(_mapper.Map<List<AuthorDTO>>(result),count,pageNumber,pageSize);
         }
 
         public async Task<AuthorDTO> GetById(int id)

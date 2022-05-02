@@ -18,12 +18,4 @@ public class PaginatedList<T>
     public bool HasPreviousPage => PageNumber > 1;
 
     public bool HasNextPage => PageNumber < TotalPages;
-
-    public static PaginatedList<T> Create(IQueryable<T> source, int pageNumber, int pageSize)
-    {
-        var count = source.Count();
-        var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-
-        return new PaginatedList<T>(items, count, pageNumber, pageSize);
-    }
 }

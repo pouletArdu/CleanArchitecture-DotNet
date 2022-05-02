@@ -1,7 +1,13 @@
-﻿namespace Formation.Api.Controllers
+﻿using Formation.Application.Authors.Commands.CreateAuthor;
+namespace Formation.Api.Controllers
 {
     public class AuthorController : ApiControllerBase
     {
-        [HTTP]
+        [HttpPost]
+        public async void Add(CreateAuthorCommand command)
+        {
+            _ = await
+                Mediator.Send(command);
+        }
     }
 }

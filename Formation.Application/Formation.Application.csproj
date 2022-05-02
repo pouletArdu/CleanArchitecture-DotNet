@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Authors\Commands\GetAll\" />
     <Folder Include="Authors\Commands\UpdateAuthor\" />
-    <Folder Include="Authors\Queries\GetAllAuthors\" />
     <Folder Include="Authors\Queries\GetOneAuthor\" />
     <Folder Include="Books\Commands\DeleteBook\" />
     <Folder Include="Books\Commands\UpdateBook\" />
@@ -20,6 +20,7 @@
   <ItemGroup>
     <PackageReference Include="MediatR.Extensions.FluentValidation.AspNetCore" Version="2.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>

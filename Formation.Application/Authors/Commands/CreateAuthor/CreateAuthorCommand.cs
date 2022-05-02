@@ -1,4 +1,7 @@
-﻿namespace Formation.Application.Authors.Commands.CreateAuthor
+﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json.Converters;
+
+namespace Formation.Application.Authors.Commands.CreateAuthor
 {
     public class CreateAuthorCommand : IRequest<AuthorDTO>
     {
@@ -10,11 +13,16 @@
             Gender = gender;
         }
 
+        public CreateAuthorCommand()
+        {
+
+        }
+
         public string FirstName { get; init; }
         public string LastName { get; init; }
         public DateTime BirthDay { get; init; }
-        public Gender Gender { get; init; }
-            }
+        public Gender Gender { get; init; }            
+    }
 
     public class CreateAuthorCommandHandler : IRequestHandler<CreateAuthorCommand, AuthorDTO>
     {
@@ -28,7 +36,13 @@
         public Task<AuthorDTO> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
         {
             return _authorRepository.Create(new AuthorDTO {
-            BirthDay = request.BirthDay});
+                    BirthDay = request.BirthDay,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    gender = request.Gender,
+                    CreationDate = DateTime.Now,
+                    ModificationDate = DateTime.Now                    
+            });
         }
     }
 }

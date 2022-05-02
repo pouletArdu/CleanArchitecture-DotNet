@@ -1,4 +1,6 @@
-﻿namespace Formation.Infrastructure.Repositories;
+﻿using Formation.Application.Common.Model;
+
+namespace Formation.Infrastructure.Repositories;
 
 public class BookRepositoryImp : BookRepository
 {
@@ -23,6 +25,11 @@ public class BookRepositoryImp : BookRepository
     }
 
     public Task<IEnumerable<BookDTO>> GetAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<PaginatedList<BookDTO>> GetAll(int pageNumber, int pageSize)
     {
         throw new NotImplementedException();
     }
