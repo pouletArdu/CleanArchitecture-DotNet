@@ -1,4 +1,6 @@
-﻿namespace Application.Validation.Tests.Drivers;
+﻿using Formation.Application.Common.Model;
+
+namespace Application.Validation.Tests.Drivers;
 
 public class AuthorRepositoryMock : AuthorRepository
 {
@@ -25,12 +27,17 @@ public class AuthorRepositoryMock : AuthorRepository
         return Authors;
     }
 
-    public Task<AuthorDTO> GetById(int id)
+    public async Task<AuthorDTO> GetById(int id)
+    {
+        return Authors.FirstOrDefault(x => x.Id == id)!;
+    }
+
+    public Task<AuthorDTO> Update(AuthorDTO book)
     {
         throw new NotImplementedException();
     }
 
-    public Task<AuthorDTO> Update(AuthorDTO book)
+    public Task<PaginatedList<AuthorDTO>> GetAll(int pageNumber, int pageSize)
     {
         throw new NotImplementedException();
     }

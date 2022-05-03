@@ -2,9 +2,9 @@
 
 namespace Application.Validation.Tests.Drivers
 {
-    public class BookRepositoryMock : BookRepository,IDisposable
+    public class BookRepositoryMock : BookRepository, IDisposable
     {
-        List<BookDTO> books;
+        readonly List<BookDTO> books;
 
         public BookRepositoryMock()
         {
@@ -37,14 +37,14 @@ namespace Application.Validation.Tests.Drivers
             throw new NotImplementedException();
         }
 
-        public Task<BookDTO> GetById(int id)
+        public async Task<BookDTO> GetById(int id)
         {
-            throw new NotImplementedException();
+            return books.FirstOrDefault(x => x.Id == id)!;
         }
 
         public async Task<BookDTO> GetByTitle(string title)
         {
-            return books.FirstOrDefault(x => x.Title == title);
+            return books.FirstOrDefault(x => x.Title == title)!;
         }
 
         public Task<BookDTO> Update(BookDTO book)

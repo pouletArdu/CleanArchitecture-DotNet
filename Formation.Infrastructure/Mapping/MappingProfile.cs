@@ -4,8 +4,11 @@
     {
         public MappingProfile()
         {
-            CreateMap<AuthorDTO,Author>().ReverseMap();
-            CreateMap<BookDTO,Book>().ReverseMap();
+            CreateMap<BookDTO, Book>()
+                .ReverseMap();
+
+            CreateMap<AuthorDTO, Author>().ReverseMap()
+                .IncludeAllDerived();
         }
     }
 }

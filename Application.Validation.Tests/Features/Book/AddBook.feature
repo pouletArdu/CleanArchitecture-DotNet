@@ -5,6 +5,7 @@ Create Book
 @OK
 Scenario: I want to add a new Book
     Given I have a new book to add
+    And I had alredy register the Author
     When I add the book
     Then The book is added
 

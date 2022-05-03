@@ -1,14 +1,11 @@
-﻿using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Formation.Application.Common.Model;
+﻿using Formation.Application.Common.Model;
 
 namespace Formation.Infrastructure.Repositories
 {
     public class AuthorRepositoryImp : AuthorRepository
     {
-        private ApplicationDbContext _context;
-        private IMapper _mapper;
+        private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
         public AuthorRepositoryImp(ApplicationDbContext context, IMapper mapper)
         {
@@ -36,14 +33,19 @@ namespace Formation.Infrastructure.Repositories
 
         public async Task<PaginatedList<AuthorDTO>> GetAll(int pageNumber, int pageSize)
         {
-            var result = await _context.Authors.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            var result = await _context.Authors
+                .Include(a => a.Books)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
             var count = await _context.Authors.CountAsync();
-            return new PaginatedList<AuthorDTO>(_mapper.Map<List<AuthorDTO>>(result),count,pageNumber,pageSize);
+            return new PaginatedList<AuthorDTO>(_mapper.Map<List<AuthorDTO>>(result), count, pageNumber, pageSize);
         }
 
         public async Task<AuthorDTO> GetById(int id)
         {
-            var author =  await _context.Authors.FindAsync(id);
+            var author = await _context.Authors.FindAsync(id);
             return _mapper.Map<AuthorDTO>(author);
         }
 

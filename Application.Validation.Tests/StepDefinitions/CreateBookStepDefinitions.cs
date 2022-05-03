@@ -23,17 +23,22 @@ public class CreateBookStepDefinitions
         _book = new BookDTO
         {
             Title = "Titre",
-            Autor = new AuthorDTO
-            {
-                FirstName = "André"
-            }
+            AutorId = 1
         };
     }
+
+    [Given(@"I had alredy register the Author")]
+    public async void GivenIHadAlredyRegisterTheAuthor()
+    {
+        var repository = (AuthorRepositoryMock)GetService<AuthorRepository>();
+        await repository.Create(Mock.Of<AuthorDTO>(x => x.Id == 1 && x.FirstName == "Pop le POPA"));
+    }
+
 
     [When(@"I add the book")]
     public async void WhenIAddTheBook()
     {
-        _command = new CreateBookCommand(_book.Title,_book.Description,_book.Autor.Id);
+        _command = new CreateBookCommand(_book.Title, _book.Description, _book.AutorId);
         await SendAsync(_command);
     }
 
@@ -65,7 +70,7 @@ public class CreateBookStepDefinitions
         var repository = (BookRepositoryMock)GetService<BookRepository>();
         foreach (var row in table.Rows)
         {
-            var (title, authorFirstName,_) = row.Values;
+            var (title, authorFirstName, _) = row.Values;
             await repository.Create(new BookDTO
             {
                 Title = title,
@@ -74,7 +79,7 @@ public class CreateBookStepDefinitions
                     FirstName = authorFirstName
                 },
                 CreationDate = DateTime.Now
-            }) ;
+            });
         }
     }
 

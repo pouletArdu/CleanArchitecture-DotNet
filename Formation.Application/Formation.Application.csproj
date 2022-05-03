@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Authors\Commands\GetAll\" />
     <Folder Include="Authors\Commands\UpdateAuthor\" />
     <Folder Include="Authors\Queries\GetOneAuthor\" />
     <Folder Include="Books\Commands\DeleteBook\" />

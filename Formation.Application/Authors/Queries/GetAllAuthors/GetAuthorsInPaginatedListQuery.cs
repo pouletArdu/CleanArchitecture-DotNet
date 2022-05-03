@@ -2,14 +2,17 @@
 {
     public class GetAuthorsInPaginatedListQuery : IRequest<PaginatedList<AuthorDTO>>
     {
+        public GetAuthorsInPaginatedListQuery()
+        {
+        }
         public GetAuthorsInPaginatedListQuery(int pageNumber, int pageSize)
         {
             PageNumber = pageNumber;
             PageSize = pageSize;
         }
 
-        public int PageNumber { get; }
-        public int PageSize { get; }
+        public int PageNumber { get; init; }
+        public int PageSize { get; init; }
     }
 
     public class GetAuthorsInPaginatedListQueryHandler : IRequestHandler<GetAuthorsInPaginatedListQuery, PaginatedList<AuthorDTO>>
@@ -22,7 +25,7 @@
         }
         public async Task<PaginatedList<AuthorDTO>> Handle(GetAuthorsInPaginatedListQuery request, CancellationToken cancellationToken)
         {
-            return await authorRepository.GetAll(request.PageNumber,request.PageSize);
+            return await authorRepository.GetAll(request.PageNumber, request.PageSize);
         }
     }
 }

@@ -27,13 +27,11 @@ public class CreateBookCommandHander : IRequestHandler<CreateBookCommand, BookDT
 
     public async Task<BookDTO> Handle(CreateBookCommand request, CancellationToken cancellationToken)
     {
-        var author = await _authorRepository.GetById(request.AuthorId);
-
         var book = await _bookRepository.Create(new BookDTO
         {
             Title = request.Title,
             Description = request.Description,
-            Autor = author
+            AutorId = request.AuthorId
         });
 
         return book;

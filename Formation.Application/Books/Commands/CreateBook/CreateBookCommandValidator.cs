@@ -2,8 +2,8 @@
 {
     public class CreateBookCommandValidator : AbstractValidator<CreateBookCommand>
     {
-        private BookRepository bookRepository;
-        private AuthorRepository authorRepository;
+        private readonly BookRepository bookRepository;
+        private readonly AuthorRepository authorRepository;
 
         public CreateBookCommandValidator(BookRepository bookRepository, AuthorRepository authorRepository)
         {
@@ -25,10 +25,10 @@
         {
             return await bookRepository.GetByTitle(title) == null;
         }
-        
+
         public async Task<bool> AuthorShouldExist(int id, CancellationToken cancellationToken)
         {
-            return await authorRepository.GetById(id) == null;
+            return await authorRepository.GetById(id) != null;
         }
     }
 }

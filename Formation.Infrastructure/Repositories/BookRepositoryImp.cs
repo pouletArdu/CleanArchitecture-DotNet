@@ -4,8 +4,8 @@ namespace Formation.Infrastructure.Repositories;
 
 public class BookRepositoryImp : BookRepository
 {
-    private ApplicationDbContext _dbContext;
-    private IMapper _mapper;
+    private readonly ApplicationDbContext _dbContext;
+    private readonly IMapper _mapper;
     public BookRepositoryImp(ApplicationDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext;
@@ -14,7 +14,9 @@ public class BookRepositoryImp : BookRepository
 
     public async Task<BookDTO> Create(BookDTO item)
     {
-        await _dbContext.Books.AddAsync(_mapper.Map<Book>(item));
+        var entity = _mapper.Map<Book>(item);
+        entity.Author = _dbContext.Authors.FirstOrDefault(a => a.Id == item.AutorId)!;
+        await _dbContext.Books.AddAsync(entity);
         await _dbContext.SaveChangesAsync();
         return item;
     }
