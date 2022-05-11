@@ -23,7 +23,9 @@ namespace Formation.Infrastructure.Repositories
 
         public Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var author = _context.Authors.Find(id);
+            if (author == null) throw new
+             _context.Authors.Remove(author);
         }
 
         public Task<IEnumerable<AuthorDTO>> GetAll()

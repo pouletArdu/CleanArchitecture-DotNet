@@ -1,4 +1,4 @@
-using static Application.Validation.Tests.Testing;
+using Formation.Domain.Enums;
 
 namespace Application.Validation.Tests.StepDefinitions;
 
@@ -6,7 +6,7 @@ namespace Application.Validation.Tests.StepDefinitions;
 public class AddAuthorStepDefinitions
 {
     private AuthorDTO _author = null!;
-    private CreateAuthorCommand _command = null;
+    private CreateAuthorCommand _command = null!;
 
     [Given(@"I have a new author to add")]
     public void GivenIHaveANewAuthorToAdd()
@@ -26,6 +26,16 @@ public class AddAuthorStepDefinitions
         _author.LastName = bar;
     }
 
+    [Given(@"his Geder is ""([^""]*)""")]
+    public void GivenHisGederIs(string male)
+    {
+        if (Enum.TryParse<Gender>(male, out var gender))
+        {
+            _author.gender = gender;
+        }
+    }
+
+
     [Given(@"his birthDay  is ""([^""]*)""")]
     public void GivenHisBirthDayIs(string birthDay)
     {
@@ -35,7 +45,7 @@ public class AddAuthorStepDefinitions
     [When(@"I add the author")]
     public async void WhenIAddTheAuthor()
     {
-        _command = new CreateAuthorCommand("John", "Doe", new DateTime(25, 04, 1985), Formation.Domain.Enums.Gender.Male);
+        _command = new CreateAuthorCommand(_author.FirstName, _author.LastName, _author.BirthDay, _author.gender);
         await SendAsync(_command);
     }
 
@@ -50,11 +60,5 @@ public class AddAuthorStepDefinitions
         author.FirstName.Should().Be(_author.FirstName);
         author.LastName.Should().Be(_author.LastName);
         author.BirthDay.Should().Be(_author.BirthDay);
-    }
-
-    private void MockTest()
-    {
-        var t = new Mock<AuthorDTO>();
-
     }
 }

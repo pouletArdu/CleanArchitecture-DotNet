@@ -37,8 +37,14 @@ public class AuthorRepositoryMock : AuthorRepository
         throw new NotImplementedException();
     }
 
-    public Task<PaginatedList<AuthorDTO>> GetAll(int pageNumber, int pageSize)
+    public async Task<PaginatedList<AuthorDTO>> GetAll(int pageNumber, int pageSize)
     {
-        throw new NotImplementedException();
+        var count = Authors.Count();
+
+        return new PaginatedList<AuthorDTO>(
+            Authors.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList(),
+            count,
+            pageNumber,
+            pageSize);
     }
 }

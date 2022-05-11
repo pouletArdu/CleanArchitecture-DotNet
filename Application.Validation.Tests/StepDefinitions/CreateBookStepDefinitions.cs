@@ -1,4 +1,3 @@
-using static Application.Validation.Tests.Testing;
 using ValidationException = Formation.Application.Common.Exceptions.ValidationException;
 
 namespace Application.Validation.Tests.StepDefinitions;
