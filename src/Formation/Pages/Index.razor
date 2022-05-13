@@ -1,0 +1,45 @@
+﻿@page "/"
+@using MediatR
+@using Formation.Application.Books.Queries.GetAll
+@using Formation.Domain.Entities
+@inject ISender Sender
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Id de l'autheur</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var book in books)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Description</td>
+                <td>@book.AutorId</td>
+            </tr>          
+
+
+        }
+
+    </tbody>
+</table>
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+@code {
+
+    private List<BookDTO> books;
+    protected override async Task OnInitializedAsync()
+    {
+        var tbooks = await Sender.Send(new GetBooksInPaginatedListQuery(1, 10));
+        books = tbooks.Items;
+    }
+}
