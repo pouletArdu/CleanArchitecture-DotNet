@@ -4,26 +4,32 @@ namespace Formation.Infrastructure.Repositories;
 
 public class BookRepositoryImp : BookRepository
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     public BookRepositoryImp(ApplicationDbContext dbContext, IMapper mapper)
     {
-        _dbContext = dbContext;
+        _context = dbContext;
         _mapper = mapper;
     }
 
-    public async Task<BookDTO> Create(BookDTO item)
+    public async Task<int> Create(BookDTO item)
     {
         var entity = _mapper.Map<Book>(item);
-        entity.Author = _dbContext.Authors.FirstOrDefault(a => a.Id == item.AutorId)!;
-        await _dbContext.Books.AddAsync(entity);
-        await _dbContext.SaveChangesAsync();
-        return item;
+        entity.Author = _context.Authors.FirstOrDefault(a => a.Id == item.AutorId)!;
+        await _context.Books.AddAsync(entity);
+        await _context.SaveChangesAsync();
+        return entity.Id;
     }
 
-    public Task Delete(int id)
+    public async Task Delete(int id)
     {
-        throw new NotImplementedException();
+        var book = _context.Books.Find(id);
+
+        if (book == null) throw new NotFoundException(nameof(Application.Books), id);
+
+        _context.Books.Remove(book);
+
+        await _context.SaveChangesAsync();
     }
 
     public Task<IEnumerable<BookDTO>> GetAll()
@@ -31,19 +37,27 @@ public class BookRepositoryImp : BookRepository
         throw new NotImplementedException();
     }
 
-    public Task<PaginatedList<BookDTO>> GetAll(int pageNumber, int pageSize)
+    public async Task<PaginatedList<BookDTO>> GetAll(int pageNumber, int pageSize)
     {
-        throw new NotImplementedException();
+        var result = await _context.Books
+            .Include(a => a.Author)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        var count = await _context.Books.CountAsync();
+        return new PaginatedList<BookDTO>(_mapper.Map<List<BookDTO>>(result), count, pageNumber, pageSize);
     }
 
-    public Task<BookDTO> GetById(int id)
+    public async Task<BookDTO> GetById(int id)
     {
-        throw new NotImplementedException();
+        var book = await _context.Books.FindAsync(id);
+        return _mapper.Map<BookDTO>(book);
     }
 
     public async Task<BookDTO> GetByTitle(string title)
     {
-        var book = await _dbContext.Books.FirstOrDefaultAsync(f => f.Title == title);
+        var book = await _context.Books.FirstOrDefaultAsync(f => f.Title == title);
         return _mapper.Map<BookDTO>(book);
     }
 

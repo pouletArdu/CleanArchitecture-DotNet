@@ -11,14 +11,16 @@
     <Folder Include="Authors\Queries\GetOneAuthor\" />
     <Folder Include="Books\Commands\DeleteBook\" />
     <Folder Include="Books\Commands\UpdateBook\" />
-    <Folder Include="Books\Queries\GetAll\" />
     <Folder Include="Books\Queries\GetOne\" />
     <Folder Include="Entities\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="MediatR.Extensions.FluentValidation.AspNetCore" Version="2.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 

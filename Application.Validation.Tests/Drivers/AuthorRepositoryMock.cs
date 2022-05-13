@@ -11,10 +11,10 @@ public class AuthorRepositoryMock : AuthorRepository
         Authors = new List<AuthorDTO>();
     }
 
-    public async Task<AuthorDTO> Create(AuthorDTO item)
+    public async Task<int> Create(AuthorDTO item)
     {
         Authors.Add(item);
-        return item;
+        return item.Id;
     }
 
     public Task Delete(int id)

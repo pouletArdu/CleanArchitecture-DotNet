@@ -1,6 +1,6 @@
 ﻿namespace Formation.Application.Books.Commands.CreateBook;
 
-public class CreateBookCommand : IRequest<BookDTO>
+public class CreateBookCommand : IRequest<int>
 {
     public string Title { get; init; }
     public string? Description { get; init; }
@@ -14,7 +14,7 @@ public class CreateBookCommand : IRequest<BookDTO>
     }
 }
 
-public class CreateBookCommandHander : IRequestHandler<CreateBookCommand, BookDTO>
+public class CreateBookCommandHander : IRequestHandler<CreateBookCommand, int>
 {
     private readonly BookRepository _bookRepository;
     private readonly AuthorRepository _authorRepository;
@@ -25,15 +25,14 @@ public class CreateBookCommandHander : IRequestHandler<CreateBookCommand, BookDT
         _authorRepository = authorRepository;
     }
 
-    public async Task<BookDTO> Handle(CreateBookCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateBookCommand request, CancellationToken cancellationToken)
     {
-        var book = await _bookRepository.Create(new BookDTO
-        {
-            Title = request.Title,
-            Description = request.Description,
-            AutorId = request.AuthorId
-        });
-
-        return book;
+        return await _bookRepository.Create(
+            BookDTO.CreateBuilder()
+            .WithAuthorId(request.AuthorId)
+            .WithDescription(request.Description)
+            .WithTitle(request.Title)
+            .Build()
+            );
     }
 }

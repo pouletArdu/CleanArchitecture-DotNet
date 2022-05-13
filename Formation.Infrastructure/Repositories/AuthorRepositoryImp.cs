@@ -13,19 +13,23 @@ namespace Formation.Infrastructure.Repositories
             _mapper = mapper;
         }
 
-        public async Task<AuthorDTO> Create(AuthorDTO item)
+        public async Task<int> Create(AuthorDTO item)
         {
             var entity = _mapper.Map<Author>(item);
             await _context.Authors.AddAsync(entity);
             await _context.SaveChangesAsync();
-            return item;
+            return entity.Id;
         }
 
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
             var author = _context.Authors.Find(id);
-            if (author == null) throw new
-             _context.Authors.Remove(author);
+
+            if (author == null) throw new NotFoundException();
+
+            _context.Authors.Remove(author);
+
+            await _context.SaveChangesAsync();
         }
 
         public Task<IEnumerable<AuthorDTO>> GetAll()

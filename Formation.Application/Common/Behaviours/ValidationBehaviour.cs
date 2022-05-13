@@ -1,6 +1,6 @@
 ﻿using ValidationException = Formation.Application.Common.Exceptions.ValidationException;
 
-namespace Formation.Application.Common.Pipelines;
+namespace Formation.Application.Common.Behaviours;
 
 public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
      where TRequest : IRequest<TResponse>

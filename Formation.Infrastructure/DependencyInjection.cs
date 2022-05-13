@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Formation.Infrastructure.Persistence;
 using Formation.Infrastructure.Repositories;
 
 namespace Formation.Infrastructure

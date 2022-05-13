@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-using Formation.Application.Common.Pipelines;
+﻿using System.Reflection;
+using Formation.Application.Common.Behaviours;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Formation.Application;
 
@@ -10,9 +10,11 @@ public static class DependencyInjection
     {
         var ass = Assembly.GetExecutingAssembly();
 
+        services.AddAutoMapper(ass);
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddMediatR(Assembly.GetExecutingAssembly());
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
         return services;
     }
 }

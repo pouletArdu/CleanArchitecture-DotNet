@@ -1,31 +1,30 @@
-﻿namespace Formation.Application.Authors.Queries.GetAllAuthors
-{
-    public class GetAuthorsInPaginatedListQuery : IRequest<PaginatedList<AuthorDTO>>
-    {
-        public GetAuthorsInPaginatedListQuery()
-        {
-        }
-        public GetAuthorsInPaginatedListQuery(int pageNumber, int pageSize)
-        {
-            PageNumber = pageNumber;
-            PageSize = pageSize;
-        }
+﻿namespace Formation.Application.Authors.Queries.GetAllAuthors;
 
-        public int PageNumber { get; init; }
-        public int PageSize { get; init; }
+public class GetAuthorsInPaginatedListQuery : IRequest<PaginatedList<AuthorDTO>>
+{
+    public GetAuthorsInPaginatedListQuery()
+    {
+    }
+    public GetAuthorsInPaginatedListQuery(int pageNumber, int pageSize)
+    {
+        PageNumber = pageNumber;
+        PageSize = pageSize;
     }
 
-    public class GetAuthorsInPaginatedListQueryHandler : IRequestHandler<GetAuthorsInPaginatedListQuery, PaginatedList<AuthorDTO>>
-    {
-        private readonly AuthorRepository authorRepository;
+    public int PageNumber { get; init; }
+    public int PageSize { get; init; }
+}
 
-        public GetAuthorsInPaginatedListQueryHandler(AuthorRepository authorRepository)
-        {
-            this.authorRepository = authorRepository;
-        }
-        public async Task<PaginatedList<AuthorDTO>> Handle(GetAuthorsInPaginatedListQuery request, CancellationToken cancellationToken)
-        {
-            return await authorRepository.GetAll(request.PageNumber, request.PageSize);
-        }
+public class GetAuthorsInPaginatedListQueryHandler : IRequestHandler<GetAuthorsInPaginatedListQuery, PaginatedList<AuthorDTO>>
+{
+    private readonly AuthorRepository authorRepository;
+
+    public GetAuthorsInPaginatedListQueryHandler(AuthorRepository authorRepository)
+    {
+        this.authorRepository = authorRepository;
+    }
+    public async Task<PaginatedList<AuthorDTO>> Handle(GetAuthorsInPaginatedListQuery request, CancellationToken cancellationToken)
+    {
+        return await authorRepository.GetAll(request.PageNumber, request.PageSize);
     }
 }
