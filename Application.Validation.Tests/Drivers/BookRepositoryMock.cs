@@ -11,10 +11,10 @@ namespace Application.Validation.Tests.Drivers
             books = new List<BookDTO>();
         }
 
-        public async Task<BookDTO> Create(BookDTO book)
+        public async Task<int> Create(BookDTO book)
         {
             books.Add(book);
-            return book;
+            return books.Count() + 1;
         }
 
         public Task Delete(int id)

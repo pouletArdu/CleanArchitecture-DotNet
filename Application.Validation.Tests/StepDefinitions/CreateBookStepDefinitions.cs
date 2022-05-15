@@ -19,11 +19,10 @@ public class CreateBookStepDefinitions
     [Given(@"I have a new book to add")]
     public void GivenIHaveANewBookToAdd()
     {
-        _book = new BookDTO
-        {
-            Title = "Titre",
-            AutorId = 1
-        };
+        BookDTO.CreateBuilder()
+            .WithTitle("Title")
+            .WithAuthorId(1)
+            .WithDescription("Description");
     }
 
     [Given(@"I had alredy register the Author")]
@@ -53,14 +52,9 @@ public class CreateBookStepDefinitions
     [Given(@"I have a new book without title to add")]
     public void GivenIHaveANewBookWithoutTitleToAdd()
     {
-        _book = new BookDTO
-        {
-            Autor = new AuthorDTO
-            {
-                FirstName = "André"
-            },
-            CreationDate = DateTime.Now
-        };
+        BookDTO.CreateBuilder()
+            .WithAuthorId(1)
+            .Build();
     }
 
     [Given(@"a list of book :")]
@@ -70,30 +64,21 @@ public class CreateBookStepDefinitions
         foreach (var row in table.Rows)
         {
             var (title, authorFirstName, _) = row.Values;
-            await repository.Create(new BookDTO
-            {
-                Title = title,
-                Autor = new AuthorDTO
-                {
-                    FirstName = authorFirstName
-                },
-                CreationDate = DateTime.Now
-            });
+            await repository.Create(
+                BookDTO.CreateBuilder()
+                .WithAuthorId(0)
+                .WithTitle(title)
+                .Build());
         }
     }
 
     [Given(@"I have a new book '([^']*)' to add")]
     public void GivenIHaveANewBookToAdd(string title)
     {
-        _book = new BookDTO
-        {
-            Title = title,
-            Autor = new AuthorDTO
-            {
-                FirstName = "Nathanaël"
-            },
-            CreationDate = DateTime.Now
-        };
+        _book = BookDTO.CreateBuilder()
+            .WithTitle(title)
+            .WithAuthorId(1)
+            .Build();
     }
 
     [When(@"I add the book to the validator")]
