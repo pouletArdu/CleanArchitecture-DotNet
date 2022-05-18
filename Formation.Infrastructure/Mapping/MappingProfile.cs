@@ -8,7 +8,7 @@
                 .ReverseMap()
                 .IncludeAllDerived()
                 .ForMember(dest => dest.AutorId, act => act.MapFrom(org => org.Author.Id))
-                .ForMember(dest => dest.Autor, act => act.MapFrom(org => new AuthorDTO
+                .ForMember(dest => dest.Author, act => act.MapFrom(org => new AuthorDTO
                 {
                     FirstName = org.Author.FirstName,
                     LastName = org.Author.LastName

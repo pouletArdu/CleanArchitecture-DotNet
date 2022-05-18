@@ -1,0 +1,32 @@
+﻿@using Formation.Data.Common
+
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            @foreach(var header in Items.First().ToDataDictionary())
+            {
+              <th>@header.Key</th> 
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var b in Items.Select(s=>s.ToDataDictionary()))
+        {
+            <tr>
+                @foreach(var item in b)
+                {
+                   <td>@item.Value</td>
+                }
+            </tr>    
+        }
+    </tbody>
+</table>
+
+
+@code {
+    [Parameter]
+    public IEnumerable<Paginated> Items { get; set; }
+
+    [Parameter]
+    public Action WhithActionButton { get; set; }
+}

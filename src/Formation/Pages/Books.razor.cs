@@ -1,15 +1,22 @@
 using Formation.Application.Authors.Queries.GetAllAuthors;
 using Formation.Application.Books.Commands.DeleteBook;
 using Formation.Application.Books.Queries.GetAll;
+using Formation.Application.Common.Model;
 using Formation.Domain.Entities;
+using Microsoft.AspNetCore.Components;
 
 namespace Formation.Pages;
 
-public partial class BookList
+public partial class Books
 {
+    [Parameter]
+    public int PageNumber { get; set; }
+
     private Book book;
-    private List<BookDTO> books;
+    private PaginatedList<Book> books;
     private List<AuthorDTO> authors;
+    private int currentPage = 1;
+    private readonly int pageSize = 2;
     async protected override Task OnInitializedAsync()
     {
         book = new Book();
@@ -17,6 +24,12 @@ public partial class BookList
         await GetAuthors();
     }
 
+    async protected override Task OnParametersSetAsync()
+    {
+        if (PageNumber < 1) PageNumber = 1;
+        currentPage = PageNumber;
+        await GetAllBooks();
+    }
     private async Task CreateNewBook()
     {
         await Sender.Send(book.ToCreateCommand());
@@ -32,13 +45,15 @@ public partial class BookList
 
     private async Task GetAllBooks()
     {
-        books = (await Sender.Send(new GetBooksInPaginatedListQuery(1, 10))).Items;
+        var query = new GetBooksInPaginatedListQuery(currentPage, pageSize);
+        var source = await Sender.Send(query);
+        books = Mapper.Map<PaginatedList<Book>>(source);
         StateHasChanged();
     }
 
     private async Task GetAuthors()
     {
-        authors = (await Sender.Send(new GetAuthorsInPaginatedListQuery(1, 10))).Items;
+        authors = (await Sender.Send(new GetAuthorsInPaginatedListQuery(1, 100))).Items;
         StateHasChanged();
     }
 }
