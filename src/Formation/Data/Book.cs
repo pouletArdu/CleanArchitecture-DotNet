@@ -12,7 +12,7 @@ public class Book : Paginated
     public string? Description { get; set; }
 
     [Data("Auteur", 2)]
-    public string Name { get => $"{Author.firstName} {Author.lastName}"; }
+    public string Name { get => $"{Author.FirstName} {Author.LastName}"; }
 
     public int Id { get; set; }
 

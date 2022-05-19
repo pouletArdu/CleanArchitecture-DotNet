@@ -16,7 +16,7 @@ public partial class Books
     private PaginatedList<Book> books;
     private List<AuthorDTO> authors;
     private int currentPage = 1;
-    private readonly int pageSize = 2;
+    private int pageSize = 5;
     async protected override Task OnInitializedAsync()
     {
         book = new Book();
@@ -56,4 +56,12 @@ public partial class Books
         authors = (await Sender.Send(new GetAuthorsInPaginatedListQuery(1, 100))).Items;
         StateHasChanged();
     }
+
+    private async void ChangePagination(int size)
+    {
+        pageSize = size;
+        currentPage = 1;
+        await GetAllBooks();
+    }
+
 }

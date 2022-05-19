@@ -12,34 +12,21 @@
 @inject ISender Sender
 @inject IMapper Mapper
 
-<PageTitle>Index</PageTitle>
+<PageTitle>@(GetType().Name)</PageTitle>
 
 <h1 class="mt-5 mb-4">Livres enregistrés</h1>
-<Table Items="@(books.Items)"/>
 
-<table class="table table-striped table-dark">
-    <thead>
-        <tr>
-            <th>Titre</th>
-            <th>Description</th>
-            <th>Id de l'autheur</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var b in books.Items)
-        {
-            <tr>
-                <td>@b.Title</td>
-                <td>@b.Description</td>
-                <td>@b.Name</td>
-                <td class="text-center"><i class="bi bi-trash" @onclick="@(()=>RemoveBook(b.Id))"/></td>
-            </tr>    
-        }
-    </tbody>
-</table>
+@foreach(int size in new int[] { 5, 10, 15, 20 })
+{
+    <span>
+         <button class="@($"m-1 btn btn-secondary {(size == pageSize ? "active": "")}")" @onclick="@(()=>ChangePagination(size))">@size</button>
+    </span>
+}
+
+<Table Items="@(books.Items)" Delete="RemoveBook"/>
 <Pagination CurrentPage="currentPage" PaginatedList="@books" Link="books"/>
-<h1 class="mt-5 mb-4">Enregistré un nouveau livre</h1>
+
+<h1 class="mt-5 mb-4">Enregistrer un nouveau livre</h1>
 <EditForm Model="book" OnValidSubmit="CreateNewBook">
     <DataAnnotationsValidator />
     <ValidationSummary />

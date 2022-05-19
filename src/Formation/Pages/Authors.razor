@@ -1,0 +1,56 @@
+﻿@page "/authors"
+@page "/authors/{PageNumber:int}"
+@using Formation.Domain.Enums;
+@using Formation.Domain.Entities
+@using Formation.Data
+@using Formation.Components
+@using MediatR
+@inject ISender Sender
+@inject IMapper Mapper
+
+<PageTitle>@(GetType().Name)</PageTitle>
+
+<h1 class="mt-5 mb-4">Auteurs enregistrés</h1>
+
+@foreach(int size in new int[] { 5, 10, 15, 20 })
+{
+    <span>
+         <button class="@($"m-1 btn btn-secondary {(size == pageSize ? "active": "")}")" @onclick="@(()=>ChangePagination(size))">@size</button>
+    </span>
+}
+
+<Table Items="@(authors.Items)" Delete="RemoveAuthor" />
+<Pagination CurrentPage="currentPage" Link="@GetType().Name" PaginatedList="authors" />
+
+
+<EditForm Model="author" OnValidSubmit="CreateNewAuthor">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="@nameof(author.FirstName)">@nameof(author.FirstName)</label>
+        <InputText id="@nameof(author.FirstName)" @bind-Value="author.FirstName" class="form-control" />
+        <ValidationMessage For="@(() => author.FirstName)" />
+    </div>
+    <div class="form-group">
+        <label for="@nameof(author.LastName)">@nameof(author.LastName)</label>
+        <InputText id="@nameof(author.LastName)" @bind-Value="author.LastName" class="form-control" />
+        <ValidationMessage For="@(() => author.LastName)" />
+    </div>
+    <div class="form-group">
+        <label for="@nameof(author.BirthDay)">@nameof(author.BirthDay)</label>
+        <InputDate id="@nameof(author.BirthDay)" @bind-Value="author.BirthDay" class="form-control" />
+        <ValidationMessage For="@(() => author.BirthDay)" />
+    </div>
+    <div class="form-group">
+        <label for="@nameof(author.Gender)">@nameof(author.Gender)</label>
+        <InputSelect class="form-control" @bind-Value="author.Gender">
+            @foreach (var gender in Enum.GetValues(typeof(Gender)))
+            {
+                <option value="@gender">@gender</option>
+            }
+        </InputSelect>       
+        <ValidationMessage For="@(() => author.LastName)" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</EditForm>
+

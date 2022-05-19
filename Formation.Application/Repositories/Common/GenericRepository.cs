@@ -6,7 +6,7 @@
         Task<int> Create(T item);
         Task<T> GetById(int id);
         Task<PaginatedList<T>> GetAll(int pageNumber, int pageSize);
-        Task<T> Update(T item);
+        Task Update(T item, int id);
         Task Delete(int id);
     }
 }

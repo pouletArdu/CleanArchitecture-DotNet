@@ -61,7 +61,7 @@ public class BookRepositoryImp : BookRepository
         return _mapper.Map<BookDTO>(book);
     }
 
-    public Task<BookDTO> Update(BookDTO item)
+    public Task Update(BookDTO item, int id)
     {
         throw new NotImplementedException();
     }

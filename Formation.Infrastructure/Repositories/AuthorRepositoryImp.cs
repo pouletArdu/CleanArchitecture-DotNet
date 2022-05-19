@@ -55,9 +55,16 @@ namespace Formation.Infrastructure.Repositories
             return _mapper.Map<AuthorDTO>(author);
         }
 
-        public Task<AuthorDTO> Update(AuthorDTO item)
+        public async Task Update(AuthorDTO item, int id)
         {
-            throw new NotImplementedException();
+            var author = _context.Authors.Find(id);
+
+            author.BirthDay = item.BirthDay;
+            author.FirstName = item.FirstName;
+            author.LastName = item.LastName;
+            author.gender = item.gender;
+
+            await _context.SaveChangesAsync();
         }
     }
 }

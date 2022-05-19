@@ -1,5 +1,10 @@
 ﻿@using Formation.Data.Common
-
+<style>
+    .bi:hover {
+    color: red;
+    cursor: pointer;
+}
+</style>
 <table class="table table-striped table-dark">
     <thead>
         <tr>
@@ -7,15 +12,23 @@
             {
               <th>@header.Key</th> 
             }
+            @if (DeleteAction)
+            {
+             <th class="text-center">Supprimer</th>
+            }
         </tr>
     </thead>
     <tbody>
-        @foreach (var b in Items.Select(s=>s.ToDataDictionary()))
+        @foreach (var b in Items)
         {
             <tr>
-                @foreach(var item in b)
+                @foreach(var item in b.ToDataDictionary())
                 {
                    <td>@item.Value</td>
+                }
+                @if (DeleteAction)
+                {
+                    <td class="text-center"><i class="bi bi-trash" @onclick="@(()=>Delete.InvokeAsync(b.Id))"/></td>
                 }
             </tr>    
         }
@@ -28,5 +41,8 @@
     public IEnumerable<Paginated> Items { get; set; }
 
     [Parameter]
-    public Action WhithActionButton { get; set; }
+    public EventCallback<int> Delete { get; set; }
+
+
+    private bool DeleteAction { get => Delete.HasDelegate; }
 }
