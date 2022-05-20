@@ -9,7 +9,6 @@ builder.WebHost.UseWebRoot("wwwroot").UseStaticWebAssets();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
