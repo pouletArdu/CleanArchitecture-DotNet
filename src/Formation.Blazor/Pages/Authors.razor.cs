@@ -2,8 +2,8 @@ using Formation.Application.Authors.Commands.CreateAuthor;
 using Formation.Application.Authors.Commands.DeleteAuthor;
 using Formation.Application.Authors.Queries.GetAllAuthors;
 using Formation.Application.Common.Model;
-using Formation.Blazor.Data;
 using Microsoft.AspNetCore.Components;
+using AuthorModel = Formation.Blazor.Data.Author;
 
 namespace Formation.Blazor.Pages
 {
@@ -12,15 +12,15 @@ namespace Formation.Blazor.Pages
         [Parameter]
         public int PageNumber { get; set; }
 
-        private Author author;
-        private PaginatedList<Author> authors;
+        private AuthorModel author;
+        private PaginatedList<AuthorModel> authors;
         private int currentPage = 1;
         private int pageSize = 5;
 
 
         async protected override Task OnInitializedAsync()
         {
-            author = new Author();
+            author = new AuthorModel();
             await GetAllAuthors();
         }
         async protected override Task OnParametersSetAsync()
@@ -33,14 +33,14 @@ namespace Formation.Blazor.Pages
         {
             var query = new GetAuthorsInPaginatedListQuery(currentPage, pageSize);
             var source = await Sender.Send(query);
-            authors = Mapper.Map<PaginatedList<Author>>(source);
+            authors = Mapper.Map<PaginatedList<AuthorModel>>(source);
             StateHasChanged();
         }
 
         private async Task CreateNewAuthor()
         {
             await Sender.Send(Mapper.Map<CreateAuthorCommand>(author));
-            author = new Author();
+            author = new AuthorModel();
             await GetAllAuthors();
         }
 

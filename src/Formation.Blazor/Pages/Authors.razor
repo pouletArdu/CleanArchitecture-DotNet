@@ -14,7 +14,7 @@
     </span>
 }
 
-<Table Items="@(authors.Items)" Delete="RemoveAuthor" />
+<Table Items="@(authors.Items)" Delete="RemoveAuthor" Link="author" />
 <Pagination CurrentPage="currentPage" Link="@GetType().Name" PaginatedList="authors" />
 
 
@@ -28,7 +28,7 @@
     </div>
     <div class="form-group">
         <label for="@nameof(author.LastName)">@nameof(author.LastName)</label>
-        <InputText id="@nameof(author.LastName)" @bind-Value="author.LastName" class="form-control" />
+        <InputText id="@nameof(author.LastName)" @bind-Value="author.LastName" class="form-control"/>
         <ValidationMessage For="@(() => author.LastName)" />
     </div>
     <div class="form-group">

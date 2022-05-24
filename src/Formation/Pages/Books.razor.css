@@ -1,9 +1,0 @@
-﻿body {
-    background-color: rgb(30, 30, 30);
-    color : rgb(187, 194, 171)    
-}
-
-.bi:hover {
-    color: red;
-    cursor: pointer;
-}

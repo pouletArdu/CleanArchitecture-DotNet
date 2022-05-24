@@ -1,0 +1,65 @@
+﻿@page "/author/{Id:int}"
+@inject ISender Sender
+@inject IMapper Mapper
+@using Formation.Application.Authors.Queries.GetOneAuthor
+@using Formation.Application.Authors.Commands.UpdateAuthor
+@using Formation.Blazor.Data
+@using Formation.Domain.Common
+@using Formation.Domain.Enums
+
+<h3>Author - @author.Id</h3>
+
+
+<button type="button" class="btn btn-info" @onclick="Edit">Edit</button>
+
+<EditForm Model="author" OnValidSubmit="Update" class="@((InEdition?"":"disabled"))">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="@nameof(author.FirstName)">@nameof(author.FirstName)</label>
+        <InputText id="@nameof(author.FirstName)" @bind-Value="author.FirstName" class="form-control"/>
+        <ValidationMessage For="@(() => author.FirstName)" />
+    </div>
+    <div class="form-group">
+        <label for="@nameof(author.LastName)">@nameof(author.LastName)</label>
+        <InputText id="@nameof(author.LastName)" @bind-Value="author.LastName" class="form-control" />
+        <ValidationMessage For="@(() => author.LastName)" />
+    </div>
+    <div class="form-group">
+        <label for="@nameof(author.BirthDay)">@nameof(author.BirthDay)</label>
+        <InputDate id="@nameof(author.BirthDay)" @bind-Value="author.BirthDay" class="form-control" />
+        <ValidationMessage For="@(() => author.BirthDay)" />
+    </div>
+    <div class="form-group">
+        <label for="@nameof(author.Gender)">@nameof(author.Gender)</label>
+        <InputSelect class="form-control" @bind-Value="author.Gender">
+            @foreach (var gender in Enum.GetValues(typeof(Gender)))
+            {
+                <option value="@gender">@gender</option>
+            }
+        </InputSelect>       
+        <ValidationMessage For="@(() => author.LastName)" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private AuthorDTO author {get;set;}
+
+    private bool InEdition = false;
+
+    async protected override Task OnInitializedAsync()
+    {
+        author = await Sender.Send(new GetOneCommand(Id));
+    }
+    private async void Update()
+    {
+        await Sender.Send(Mapper.Map<UpdateAuthorCommand>(author));
+        InEdition = false;
+    }
+
+    private void Edit() => InEdition = !InEdition;
+}

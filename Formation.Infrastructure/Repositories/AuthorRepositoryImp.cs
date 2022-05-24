@@ -62,7 +62,7 @@ namespace Formation.Infrastructure.Repositories
             author.BirthDay = item.BirthDay;
             author.FirstName = item.FirstName;
             author.LastName = item.LastName;
-            author.gender = item.gender;
+            author.gender = item.Gender;
 
             await _context.SaveChangesAsync();
         }

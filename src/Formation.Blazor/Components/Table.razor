@@ -1,4 +1,6 @@
-﻿<style>
+﻿@inject NavigationManager _nav
+
+<style>
     .bi:hover {
     color: red;
     cursor: pointer;
@@ -23,7 +25,7 @@
             <tr>
                 @foreach(var item in b.ToDataDictionary())
                 {
-                   <td>@item.Value</td>
+                   <td @ondblclick="@(()=> _nav.NavigateTo($"{Link}/{b.Id}"))">@item.Value</td>
                 }
                 @if (DeleteAction)
                 {
@@ -38,6 +40,9 @@
 @code {
     [Parameter]
     public IEnumerable<Paginated> Items { get; set; }
+
+    [Parameter]
+    public string Link { get; set; } 
 
     [Parameter]
     public EventCallback<int> Delete { get; set; }
