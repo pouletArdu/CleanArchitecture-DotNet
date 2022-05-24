@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Formation", "src\Formation\Formation.csproj", "{8E9A52A2-7CF4-4123-88C7-78AAC9C55B34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Formation.Blazor", "src\Formation.Blazor\Formation.Blazor.csproj", "{0F3F68EA-55AF-46DB-B2AA-A5E7BA73F290}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,10 +50,10 @@ Global
 		{9E745891-AC85-498B-99A1-FBD34C5ED4D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E745891-AC85-498B-99A1-FBD34C5ED4D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E745891-AC85-498B-99A1-FBD34C5ED4D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E9A52A2-7CF4-4123-88C7-78AAC9C55B34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E9A52A2-7CF4-4123-88C7-78AAC9C55B34}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E9A52A2-7CF4-4123-88C7-78AAC9C55B34}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E9A52A2-7CF4-4123-88C7-78AAC9C55B34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F3F68EA-55AF-46DB-B2AA-A5E7BA73F290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F3F68EA-55AF-46DB-B2AA-A5E7BA73F290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F3F68EA-55AF-46DB-B2AA-A5E7BA73F290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F3F68EA-55AF-46DB-B2AA-A5E7BA73F290}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +64,7 @@ Global
 		{80FF6985-93EA-44DB-B217-FC2C2B0773F2} = {3863DDB5-9CA6-4828-A176-9570FA6F92D1}
 		{727E1A81-8A33-4C5E-A495-DCA883879199} = {3863DDB5-9CA6-4828-A176-9570FA6F92D1}
 		{9E745891-AC85-498B-99A1-FBD34C5ED4D8} = {8F5510A9-6E49-40AC-BE51-81ACB1DFF73C}
+		{0F3F68EA-55AF-46DB-B2AA-A5E7BA73F290} = {3863DDB5-9CA6-4828-A176-9570FA6F92D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA83F192-8326-41B3-8D9F-8CF598EE4A6F}

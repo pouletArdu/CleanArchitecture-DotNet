@@ -31,7 +31,7 @@ public class AddAuthorStepDefinitions
     {
         if (Enum.TryParse<Gender>(male, out var gender))
         {
-            _author.gender = gender;
+            _author.Gender = gender;
         }
     }
 
@@ -45,7 +45,7 @@ public class AddAuthorStepDefinitions
     [When(@"I add the author")]
     public async void WhenIAddTheAuthor()
     {
-        _command = new CreateAuthorCommand(_author.FirstName, _author.LastName, _author.BirthDay, _author.gender);
+        _command = new CreateAuthorCommand(_author.FirstName, _author.LastName, _author.BirthDay, _author.Gender);
         await SendAsync(_command);
     }
 

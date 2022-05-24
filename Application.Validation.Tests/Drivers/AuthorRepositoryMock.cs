@@ -32,7 +32,7 @@ public class AuthorRepositoryMock : AuthorRepository
         return Authors.FirstOrDefault(x => x.Id == id)!;
     }
 
-    public Task<AuthorDTO> Update(AuthorDTO book)
+    public Task Update(AuthorDTO book, int id)
     {
         throw new NotImplementedException();
     }

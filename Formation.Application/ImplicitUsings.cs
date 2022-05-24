@@ -1,5 +1,6 @@
 ﻿global using AutoMapper;
 global using FluentValidation;
+global using Formation.Application.Common.Mapping;
 global using Formation.Application.Common.Model;
 global using Formation.Application.Repositories;
 global using Formation.Application.Repositories.Common;

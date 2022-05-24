@@ -1,0 +1,52 @@
+﻿@page "/books"
+@page "/books/{PageNumber:int}"
+@using Formation.Application.Common.Model
+@using Formation.Domain.Entities.Common
+@using MediatR
+@using Formation.Application.Books.Queries.GetAll
+@using Formation.Application.Books.Commands.DeleteBook
+@using Formation.Domain.Entities
+@inject ISender Sender
+@inject IMapper Mapper
+
+<PageTitle>@(GetType().Name)</PageTitle>
+
+<h1 class="mt-5 mb-4">Livres enregistrés</h1>
+
+@foreach(int size in new int[] { 5, 10, 15, 20 })
+{
+    <span>
+         <button class="@($"m-1 btn btn-secondary {(size == pageSize ? "active": "")}")" @onclick="@(()=>ChangePagination(size))">@size</button>
+    </span>
+}
+
+<Table Items="@(books.Items)" Delete="RemoveBook"/>
+<Pagination CurrentPage="currentPage" PaginatedList="@books" Link="books"/>
+
+<h1 class="mt-5 mb-4">Enregistrer un nouveau livre</h1>
+<EditForm Model="book" OnValidSubmit="CreateNewBook">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="@nameof(book.Title)">@nameof(book.Title)</label>
+        <InputText id="@nameof(book.Title)" @bind-Value="book.Title" class="form-control" />
+        <ValidationMessage For="@(() => book.Title)" />
+    </div>
+    <div class="form-group">
+        <label for="@nameof(book.AuthorId)">@nameof(book.AuthorId)</label>
+        <InputSelect @bind-Value="book.AuthorId" class="form-control">
+            @foreach (var author in authors)
+            {
+               <option value="@author.Id">@(author.FirstName+" "+author.LastName)</option> 
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => book.AuthorId)" />
+    </div>
+    <div class="form-group">
+        <label for="@nameof(book.Description)">@nameof(book.Description)</label>
+        <InputTextArea id="@nameof(book.Description)" @bind-Value="book.Description" class="form-control" />
+        <ValidationMessage For="@(() => book.Description)" />
+    </div>    
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</EditForm>
+

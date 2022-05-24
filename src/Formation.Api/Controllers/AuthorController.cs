@@ -1,6 +1,7 @@
 ﻿global using Formation.Application.Common.Model;
 using Formation.Application.Authors.Commands.CreateAuthor;
 using Formation.Application.Authors.Commands.DeleteAuthor;
+using Formation.Application.Authors.Commands.UpdateAuthor;
 using Formation.Application.Authors.Queries.GetAllAuthors;
 
 namespace Formation.Api.Controllers;
@@ -24,6 +25,13 @@ public class AuthorController : ApiControllerBase
     public async Task<ActionResult> Delete(int id)
     {
         await Mediator.Send(new DeleteAuthorCommand(id));
+        return NoContent();
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult> Update(int id, [FromBody] UpdateAuthorCommand command)
+    {
+        await Mediator.Send(command);
         return NoContent();
     }
 }

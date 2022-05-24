@@ -51,5 +51,10 @@ namespace Application.Validation.Tests.Drivers
         {
             throw new NotImplementedException();
         }
+
+        public Task Update(BookDTO item, int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

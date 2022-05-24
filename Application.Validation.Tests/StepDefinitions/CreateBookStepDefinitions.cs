@@ -84,7 +84,7 @@ public class CreateBookStepDefinitions
     [When(@"I add the book to the validator")]
     public void WhenIAddTheBookToTheValidator()
     {
-        _command = new CreateBookCommand(_book.Title, _book.Description, _book.Autor.Id);
+        _command = new CreateBookCommand(_book.Title, _book.Description, _book.Author.Id);
     }
 
     [Then(@"An ValidationException is raised by the validator")]

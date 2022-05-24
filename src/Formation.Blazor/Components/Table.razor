@@ -1,0 +1,52 @@
+﻿@inject NavigationManager _nav
+
+<style>
+    .bi:hover {
+    color: red;
+    cursor: pointer;
+}
+</style>
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            @foreach(var header in Items.First().ToDataDictionary())
+            {
+              <th>@header.Key</th> 
+            }
+            @if (DeleteAction)
+            {
+             <th class="text-center">Supprimer</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var b in Items)
+        {
+            <tr>
+                @foreach(var item in b.ToDataDictionary())
+                {
+                   <td @ondblclick="@(()=> _nav.NavigateTo($"{Link}/{b.Id}"))">@item.Value</td>
+                }
+                @if (DeleteAction)
+                {
+                    <td class="text-center"><i class="bi bi-trash" @onclick="@(()=>Delete.InvokeAsync(b.Id))"/></td>
+                }
+            </tr>    
+        }
+    </tbody>
+</table>
+
+
+@code {
+    [Parameter]
+    public IEnumerable<Paginated> Items { get; set; }
+
+    [Parameter]
+    public string Link { get; set; } 
+
+    [Parameter]
+    public EventCallback<int> Delete { get; set; }
+
+
+    private bool DeleteAction { get => Delete.HasDelegate; }
+}
