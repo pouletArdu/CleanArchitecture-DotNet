@@ -2,6 +2,12 @@
 
 Create Book
 
+Background: 
+    Given available authors are:
+        | firstName | lastName | birthDay   | id |
+        | jean      | Ferra    | 1985-05-01 | 1  |
+        | Joe       | Labat    | 1982-01-01 | 2  |
+
 @OK
 Scenario: I want to add a new Book
     Given I have a new book to add

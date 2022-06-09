@@ -17,12 +17,10 @@ public class CreateBookCommand : IRequest<int>
 public class CreateBookCommandHander : IRequestHandler<CreateBookCommand, int>
 {
     private readonly BookRepository _bookRepository;
-    private readonly AuthorRepository _authorRepository;
 
-    public CreateBookCommandHander(BookRepository bookRepository, AuthorRepository authorRepository)
+    public CreateBookCommandHander(BookRepository bookRepository)
     {
         _bookRepository = bookRepository;
-        _authorRepository = authorRepository;
     }
 
     public async Task<int> Handle(CreateBookCommand request, CancellationToken cancellationToken)
