@@ -73,6 +73,54 @@ namespace Application.Validation.Tests.Features.Book
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 5
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Id",
+                        "First Name",
+                        "Last Name",
+                        "Birthday",
+                        "Gender"});
+            table1.AddRow(new string[] {
+                        "1",
+                        "jean",
+                        "Ferra",
+                        "1985-05-01",
+                        "Male"});
+            table1.AddRow(new string[] {
+                        "2",
+                        "Léa",
+                        "Labat",
+                        "1982-01-01",
+                        "Female"});
+            table1.AddRow(new string[] {
+                        "3",
+                        "Nath",
+                        "Klein",
+                        "1985-24-04",
+                        "Male"});
+#line 6
+    testRunner.Given("available authors are:", ((string)(null)), table1, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Title",
+                        "Description",
+                        "Author Id"});
+            table2.AddRow(new string[] {
+                        "Une archi presque parfaite",
+                        "Comment faire de la clean Architecture",
+                        "1"});
+            table2.AddRow(new string[] {
+                        "la cuisine pour les nulles",
+                        "Comment faire de la cuisine",
+                        "2"});
+#line 11
+    testRunner.And("available Books are :", ((string)(null)), table2, "And ");
+#line hidden
+        }
+        
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("I want to add a new Book")]
         [NUnit.Framework.CategoryAttribute("OK")]
@@ -82,7 +130,7 @@ namespace Application.Validation.Tests.Features.Book
                     "OK"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want to add a new Book", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 6
+#line 17
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -92,16 +140,24 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 7
-    testRunner.Given("I have a new book to add", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 5
+this.FeatureBackground();
 #line hidden
-#line 8
-    testRunner.And("I had alredy register the Author", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Title",
+                            "Description",
+                            "Author Id"});
+                table3.AddRow(new string[] {
+                            "Frite presque parfaite",
+                            "Comment faire des bonnes frites",
+                            "3"});
+#line 18
+    testRunner.Given("I have a new book to add :", ((string)(null)), table3, "Given ");
 #line hidden
-#line 9
+#line 21
     testRunner.When("I add the book", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 10
+#line 22
     testRunner.Then("The book is added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -117,7 +173,7 @@ this.ScenarioInitialize(scenarioInfo);
                     "KO"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want to add a Book Alredy registred", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 13
+#line 25
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -127,25 +183,24 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                            "title",
-                            "Autor"});
-                table1.AddRow(new string[] {
-                            "livre1",
-                            "Gide"});
-                table1.AddRow(new string[] {
-                            "livre2",
-                            "King"});
-#line 14
-    testRunner.Given("a list of book :", ((string)(null)), table1, "Given ");
+#line 5
+this.FeatureBackground();
 #line hidden
-#line 18
-    testRunner.And("I have a new book \'livre1\' to add", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Title",
+                            "Description",
+                            "Author Id"});
+                table4.AddRow(new string[] {
+                            "Une archi presque parfaite",
+                            "Comment faire des bonnes frites",
+                            "3"});
+#line 26
+    testRunner.Given("I have a new book to add :", ((string)(null)), table4, "Given ");
 #line hidden
-#line 19
+#line 29
     testRunner.When("I add the book to the validator", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 20
+#line 30
     testRunner.Then("An ValidationException is raised by the validator", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -161,7 +216,7 @@ this.ScenarioInitialize(scenarioInfo);
                     "KO"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I want to add a new Book without Title", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 23
+#line 33
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -171,13 +226,24 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 24
-    testRunner.Given("I have a new book without title to add", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 5
+this.FeatureBackground();
 #line hidden
-#line 25
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Title",
+                            "Description",
+                            "Author Id"});
+                table5.AddRow(new string[] {
+                            "",
+                            "Comment faire des bonnes frites",
+                            "3"});
+#line 34
+    testRunner.Given("I have a new book to add :", ((string)(null)), table5, "Given ");
+#line hidden
+#line 37
     testRunner.When("I add the book to the validator", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 26
+#line 38
     testRunner.Then("An ValidationException is raised by the validator", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

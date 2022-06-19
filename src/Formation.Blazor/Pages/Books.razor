@@ -20,7 +20,7 @@
     </span>
 }
 
-<Table Items="@(books.Items)" Delete="RemoveBook"/>
+<Table Items="@(books.Items)" Delete="RemoveBook" Link="book"/>
 <Pagination CurrentPage="currentPage" PaginatedList="@books" Link="books"/>
 
 <h1 class="mt-5 mb-4">Enregistrer un nouveau livre</h1>
@@ -37,7 +37,7 @@
         <InputSelect @bind-Value="book.AuthorId" class="form-control">
             @foreach (var author in authors)
             {
-               <option value="@author.Id">@(author.FirstName+" "+author.LastName)</option> 
+               <option value="@author.Id">@(author)</option> 
             }
         </InputSelect>
         <ValidationMessage For="@(() => book.AuthorId)" />

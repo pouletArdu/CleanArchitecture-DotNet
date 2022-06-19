@@ -4,17 +4,12 @@ namespace Application.Validation.Tests.Drivers
 {
     public class BookRepositoryMock : BookRepository, IDisposable
     {
-        readonly List<BookDTO> books;
-
-        public BookRepositoryMock()
-        {
-            books = new List<BookDTO>();
-        }
+        static readonly List<BookDTO> Books = new();
 
         public async Task<int> Create(BookDTO book)
         {
-            books.Add(book);
-            return books.Count() + 1;
+            Books.Add(book);
+            return Books.Count() + 1;
         }
 
         public Task Delete(int id)
@@ -22,14 +17,9 @@ namespace Application.Validation.Tests.Drivers
             throw new NotImplementedException();
         }
 
-        public void Dispose()
-        {
-            books.Clear();
-        }
-
         public async Task<IEnumerable<BookDTO>> GetAll()
         {
-            return books;
+            return Books;
         }
 
         public Task<PaginatedList<BookDTO>> GetAll(int pageNumber, int pageSize)
@@ -39,13 +29,15 @@ namespace Application.Validation.Tests.Drivers
 
         public async Task<BookDTO> GetById(int id)
         {
-            return books.FirstOrDefault(x => x.Id == id)!;
+            return Books.FirstOrDefault(x => x.Id == id)!;
         }
 
         public async Task<BookDTO> GetByTitle(string title)
         {
-            return books.FirstOrDefault(x => x.Title == title)!;
+            return Books.FirstOrDefault(x => x.Title == title)!;
         }
+
+        internal void AddRange(IEnumerable<BookDTO> books) => Books.AddRange(books);
 
         public Task<BookDTO> Update(BookDTO book)
         {
@@ -55,6 +47,10 @@ namespace Application.Validation.Tests.Drivers
         public Task Update(BookDTO item, int id)
         {
             throw new NotImplementedException();
+        }
+        public void Dispose()
+        {
+            Books.Clear();
         }
     }
 }

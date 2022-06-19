@@ -2,17 +2,13 @@
 
 namespace Application.Validation.Tests.Drivers;
 
-public class AuthorRepositoryMock : AuthorRepository
+public class AuthorRepositoryMock : AuthorRepository, IDisposable
 {
-    List<AuthorDTO> Authors { get; set; }
-
-    public AuthorRepositoryMock()
-    {
-        Authors = new List<AuthorDTO>();
-    }
+    static readonly List<AuthorDTO> Authors = new();
 
     public async Task<int> Create(AuthorDTO item)
     {
+        await Task.Yield();
         Authors.Add(item);
         return item.Id;
     }
@@ -24,11 +20,13 @@ public class AuthorRepositoryMock : AuthorRepository
 
     public async Task<IEnumerable<AuthorDTO>> GetAll()
     {
+        await Task.Yield();
         return Authors;
     }
 
     public async Task<AuthorDTO> GetById(int id)
     {
+        await Task.Yield();
         return Authors.FirstOrDefault(x => x.Id == id)!;
     }
 
@@ -39,6 +37,7 @@ public class AuthorRepositoryMock : AuthorRepository
 
     public async Task<PaginatedList<AuthorDTO>> GetAll(int pageNumber, int pageSize)
     {
+        await Task.Yield();
         var count = Authors.Count();
 
         return new PaginatedList<AuthorDTO>(
@@ -46,5 +45,12 @@ public class AuthorRepositoryMock : AuthorRepository
             count,
             pageNumber,
             pageSize);
+    }
+
+    public void AddRange(IEnumerable<AuthorDTO> authors) => Authors.AddRange(authors);
+
+    public void Dispose()
+    {
+        Authors.Clear();
     }
 }

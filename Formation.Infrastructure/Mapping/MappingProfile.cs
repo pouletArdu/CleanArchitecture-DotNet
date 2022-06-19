@@ -7,14 +7,12 @@
             CreateMap<BookDTO, Book>()
                 .ReverseMap()
                 .IncludeAllDerived()
-                .ForMember(dest => dest.AutorId, act => act.MapFrom(org => org.Author.Id))
+                .ForMember(dest => dest.AuthorId, act => act.MapFrom(org => org.Author.Id))
                 .ForMember(dest => dest.Author, act => act.MapFrom(org => new AuthorDTO
                 {
                     FirstName = org.Author.FirstName,
                     LastName = org.Author.LastName
-                }))
-                ;
-
+                }));
             CreateMap<AuthorDTO, Author>()
                 .ReverseMap();
         }

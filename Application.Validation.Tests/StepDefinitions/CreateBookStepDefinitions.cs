@@ -7,14 +7,46 @@ public class CreateBookStepDefinitions
 {
     private BookDTO _book = null!;
     private CreateBookCommand _command = null!;
-
+    private BookRepositoryMock _bookRepository = null!;
+    private AuthorRepositoryMock _authorRepository = null!;
 
     [Before]
+    public void BeforeAnyTest()
+    {
+        _authorRepository = (AuthorRepositoryMock)GetService<AuthorRepository>();
+        _bookRepository = (BookRepositoryMock)GetService<BookRepository>();
+        _authorRepository.Dispose();
+        _bookRepository.Dispose();
+    }
+
+    [After]
     public void AfterAnyTest()
     {
-        var repo = (BookRepositoryMock)GetService<BookRepository>();
-        repo.Dispose();
+        _authorRepository.Dispose();
+        _bookRepository.Dispose();
     }
+
+
+    [Given(@"available authors are:")]
+    public void GivenAvailableAuthorsAre(Table table)
+    {
+        var authors = table.CreateSet<AuthorDTO>();
+        _authorRepository.AddRange(authors);
+    }
+
+    [Given(@"available Books are :")]
+    public void GivenAvailableBooksAre(Table table)
+    {
+        var books = table.CreateSet<BookDTO>();
+        _bookRepository.AddRange(books);
+    }
+
+    [Given(@"I have a new book to add :")]
+    public void GivenIHaveANewBookToAdd(Table table)
+    {
+        _book = table.CreateInstance<BookDTO>();
+    }
+
 
     [Given(@"I have a new book to add")]
     public void GivenIHaveANewBookToAdd()
@@ -36,7 +68,7 @@ public class CreateBookStepDefinitions
     [When(@"I add the book")]
     public async void WhenIAddTheBook()
     {
-        _command = new CreateBookCommand(_book.Title, _book.Description, _book.AutorId);
+        _command = new CreateBookCommand(_book.Title, _book.Description, _book.AuthorId);
         await SendAsync(_command);
     }
 
@@ -45,46 +77,13 @@ public class CreateBookStepDefinitions
     {
         var repository = (BookRepositoryMock)GetService<BookRepository>();
         var books = repository.GetAll().Result;
-        Assert.AreEqual(books.First().Title, _book.Title);
-        repository.Dispose();
-    }
-
-    [Given(@"I have a new book without title to add")]
-    public void GivenIHaveANewBookWithoutTitleToAdd()
-    {
-        BookDTO.CreateBuilder()
-            .WithAuthorId(1)
-            .Build();
-    }
-
-    [Given(@"a list of book :")]
-    public async void GivenAListOfBook(Table table)
-    {
-        var repository = (BookRepositoryMock)GetService<BookRepository>();
-        foreach (var row in table.Rows)
-        {
-            var (title, authorFirstName, _) = row.Values;
-            await repository.Create(
-                BookDTO.CreateBuilder()
-                .WithAuthorId(0)
-                .WithTitle(title)
-                .Build());
-        }
-    }
-
-    [Given(@"I have a new book '([^']*)' to add")]
-    public void GivenIHaveANewBookToAdd(string title)
-    {
-        _book = BookDTO.CreateBuilder()
-            .WithTitle(title)
-            .WithAuthorId(1)
-            .Build();
+        Assert.NotNull(_bookRepository.GetByTitle(_book.Title));
     }
 
     [When(@"I add the book to the validator")]
     public void WhenIAddTheBookToTheValidator()
     {
-        _command = new CreateBookCommand(_book.Title, _book.Description, _book.Author.Id);
+        _command = new CreateBookCommand(_book.Title, _book.Description, _book.AuthorId);
     }
 
     [Then(@"An ValidationException is raised by the validator")]

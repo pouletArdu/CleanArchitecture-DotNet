@@ -5,11 +5,7 @@
         public string Title { get; set; }
         public string? Description { get; set; }
         public AuthorDTO Author { get; set; }
-        public int AutorId { get; set; }
-
-        private BookDTO()
-        {
-        }
+        public int AuthorId { get; set; }
 
         public static builder CreateBuilder() => new builder();
 
@@ -26,7 +22,7 @@
 
             public builder WithAuthorId(int authorId)
             {
-                book.AutorId = authorId;
+                book.AuthorId = authorId;
                 return this;
             }
 

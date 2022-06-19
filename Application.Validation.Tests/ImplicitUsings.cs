@@ -12,4 +12,5 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Moq;
 global using NUnit.Framework;
 global using TechTalk.SpecFlow;
+global using TechTalk.SpecFlow.Assist;
 global using static Application.Validation.Tests.Testing;

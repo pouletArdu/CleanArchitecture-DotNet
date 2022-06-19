@@ -6,20 +6,21 @@ namespace Application.Validation.Tests;
 public class Testing
 {
     private static IServiceScopeFactory _scopeFactory = null!;
-    private static List<object> _repositories = new ();
+    private static readonly List<object> _repositories = new();
 
     [OneTimeSetUp]
     public void RunBeforeAnyTests()
     {
         var services = new ServiceCollection();
+        services.AddLogging();
         services.AddApplication();
         services.AddSingleton<BookRepository, BookRepositoryMock>();
         services.AddSingleton<AuthorRepository, AuthorRepositoryMock>();
         _scopeFactory = services.BuildServiceProvider().GetRequiredService<IServiceScopeFactory>();
     }
-    public static async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
+    public async static Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
     {
-        using IServiceScope? scope = _scopeFactory.CreateScope();
+        using var scope = _scopeFactory.CreateScope();
 
         var mediator = scope.ServiceProvider.GetRequiredService<ISender>();
 
@@ -35,6 +36,6 @@ public class Testing
             repository = scope.ServiceProvider.GetRequiredService<T>();
             _repositories.Add(repository);
         }
-        return (T) repository;
+        return (T)repository;
     }
 }

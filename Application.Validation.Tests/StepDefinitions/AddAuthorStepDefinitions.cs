@@ -39,13 +39,13 @@ public class AddAuthorStepDefinitions
     [Given(@"his birthDay  is ""([^""]*)""")]
     public void GivenHisBirthDayIs(string birthDay)
     {
-        _author.BirthDay = DateTime.Parse(birthDay);
+        _author.Birthday = DateTime.Parse(birthDay);
     }
 
     [When(@"I add the author")]
     public async void WhenIAddTheAuthor()
     {
-        _command = new CreateAuthorCommand(_author.FirstName, _author.LastName, _author.BirthDay, _author.Gender);
+        _command = new CreateAuthorCommand(_author.FirstName, _author.LastName, _author.Birthday, _author.Gender);
         await SendAsync(_command);
     }
 
@@ -59,6 +59,6 @@ public class AddAuthorStepDefinitions
         var author = authors.First();
         author.FirstName.Should().Be(_author.FirstName);
         author.LastName.Should().Be(_author.LastName);
-        author.BirthDay.Should().Be(_author.BirthDay);
+        author.Birthday.Should().Be(_author.Birthday);
     }
 }

@@ -15,7 +15,7 @@ public class BookRepositoryImp : BookRepository
     public async Task<int> Create(BookDTO item)
     {
         var entity = _mapper.Map<Book>(item);
-        entity.Author = _context.Authors.FirstOrDefault(a => a.Id == item.AutorId)!;
+        entity.Author = _context.Authors.FirstOrDefault(a => a.Id == item.AuthorId)!;
         await _context.Books.AddAsync(entity);
         await _context.SaveChangesAsync();
         return entity.Id;
@@ -51,7 +51,12 @@ public class BookRepositoryImp : BookRepository
 
     public async Task<BookDTO> GetById(int id)
     {
-        var book = await _context.Books.FindAsync(id);
+        var book = await _context
+            .Books
+            .Include(a => a.Author)
+            .Where(b => b.Id == id)
+            .FirstOrDefaultAsync();
+        ;
         return _mapper.Map<BookDTO>(book);
     }
 
@@ -61,8 +66,21 @@ public class BookRepositoryImp : BookRepository
         return _mapper.Map<BookDTO>(book);
     }
 
-    public Task Update(BookDTO item, int id)
+    public async Task Update(BookDTO item, int id)
     {
-        throw new NotImplementedException();
+        var book = await _context.FindAsync<Book>(id);
+
+        if (book == null)
+        {
+            throw new NotFoundException();
+        }
+
+        if (item.AuthorId != book.Author.Id)
+        {
+            book.Author = await _context.FindAsync<Author>(item.AuthorId);
+        }
+        book.Title = item.Title;
+        book.Description = item.Description;
+        await _context.SaveChangesAsync();
     }
 }

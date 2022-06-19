@@ -1,0 +1,65 @@
+﻿@page "/book/{Id:int}"
+@inject ISender Sender
+@inject IMapper Mapper
+@using Formation.Application.Books.Queries.GetOne
+@using Formation.Application.Books.Commands.UpdateBook
+@using Formation.Application.Authors.Queries.GetAllAuthors
+@using Formation.Application.Common.Model
+@using Formation.Blazor.Data
+@using Formation.Domain.Common
+@using Formation.Domain.Enums
+
+<h3>Book - @book.Id</h3>
+
+
+<button type="button" class="btn btn-info" @onclick="Edit">Edit</button>
+
+<EditForm Model="book" OnValidSubmit="Update" class="@((InEdition?"":"disabled"))">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="@nameof(book.Title)">@nameof(book.Title)</label>
+        <InputText id="@nameof(book.Title)" @bind-Value="book.Title" class="form-control"/>
+        <ValidationMessage For="@(() => book.Title)" />
+    </div>
+    <div class="form-group">
+        <label for="@nameof(book.Description)">@nameof(book.Description)</label>
+        <InputText id="@nameof(book.Description)" @bind-Value="book.Description" class="form-control"/>
+        <ValidationMessage For="@(() => book.Description)" />
+    </div>
+    <div class="form-group">
+        <label for="@nameof(book.AuthorId)">@nameof(book.AuthorId)</label>
+        <InputSelect @bind-Value="book.AuthorId" class="form-control">
+            @foreach (var author in authors.Items)
+            {
+               <option value="@author.Id">@(author)</option> 
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => book.AuthorId)" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private BookDTO book {get;set;}
+
+    private PaginatedList<AuthorDTO> authors;
+
+    private bool InEdition = false;
+
+    async protected override Task OnInitializedAsync()
+    {
+        book = await Sender.Send(new GetOneCommand(Id));
+        authors = await Sender.Send(new GetAuthorsInPaginatedListQuery(1, 100));
+    }
+    private async void Update()
+    {
+        await Sender.Send(Mapper.Map<UpateBookCommand>(book));
+        InEdition = false;
+    }
+
+    private void Edit() => InEdition = !InEdition;
+}

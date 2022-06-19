@@ -5,6 +5,7 @@ using Formation.Application.Common.Model;
 using Formation.Blazor.Data;
 using Formation.Domain.Entities;
 using Microsoft.AspNetCore.Components;
+using BookModel = Formation.Blazor.Data.Book;
 
 namespace Formation.Blazor.Pages;
 
@@ -13,14 +14,14 @@ public partial class Books
     [Parameter]
     public int PageNumber { get; set; }
 
-    private Book book;
+    private BookModel book;
     private PaginatedList<Book> books;
     private List<AuthorDTO> authors;
     private int currentPage = 1;
     private int pageSize = 5;
     async protected override Task OnInitializedAsync()
     {
-        book = new Book();
+        book = new BookModel();
         await GetAllBooks();
         await GetAuthors();
     }
@@ -34,7 +35,7 @@ public partial class Books
     private async Task CreateNewBook()
     {
         await Sender.Send(book.ToCreateCommand());
-        book = new Book();
+        book = new BookModel();
         await GetAllBooks();
     }
 

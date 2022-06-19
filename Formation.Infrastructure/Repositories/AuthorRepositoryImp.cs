@@ -59,7 +59,7 @@ namespace Formation.Infrastructure.Repositories
         {
             var author = _context.Authors.Find(id);
 
-            author.BirthDay = item.BirthDay;
+            author.BirthDay = item.Birthday;
             author.FirstName = item.FirstName;
             author.LastName = item.LastName;
             author.gender = item.Gender;
